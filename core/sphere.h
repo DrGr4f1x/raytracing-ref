@@ -17,6 +17,7 @@ public:
 	{}
 
 	bool hit(const Ray& r, float t_min, float t_max, HitRecord& rec) const override;
+	bool bounding_box(float t0, float t1, AABB& box) const override;
 
 private:
 	const Vec3 m_center;

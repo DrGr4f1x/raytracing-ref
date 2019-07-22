@@ -1,5 +1,6 @@
 #include "stdafx.h"
 
+#include "bvh.h"
 #include "camera.h"
 #include "dielectric.h"
 #include "hitable_list.h"
@@ -52,7 +53,7 @@ Vec3 color(const Ray& r, Hitable* world, int depth)
 }
 
 
-Hitable* random_scene()
+Hitable* random_scene(float time0, float time1)
 {
 	int n = 500;
 	Hitable** list = new Hitable*[n + 1];
@@ -68,7 +69,7 @@ Hitable* random_scene()
 			{
 				if (choose_mat < 0.8f)
 				{
-					list[i++] = new MovingSphere(center, center + Vec3(0.0f, 0.5f * g_RNG.NextFloat(), 0.0f), 0.0f, 1.0f, 0.2f, new Lambertian(Vec3(g_RNG.NextFloat() * g_RNG.NextFloat(), g_RNG.NextFloat() * g_RNG.NextFloat(), g_RNG.NextFloat() * g_RNG.NextFloat())));
+					list[i++] = new MovingSphere(center, center + Vec3(0.0f, 0.5f * g_RNG.NextFloat(), 0.0f), time0, time1, 0.2f, new Lambertian(Vec3(g_RNG.NextFloat() * g_RNG.NextFloat(), g_RNG.NextFloat() * g_RNG.NextFloat(), g_RNG.NextFloat() * g_RNG.NextFloat())));
 				}
 				else if (choose_mat < 0.95f)
 				{
@@ -86,7 +87,7 @@ Hitable* random_scene()
 	list[i++] = new Sphere(Vec3(-4.0f, 1.0f, 0.0f), 1.0f, new Lambertian(Vec3(0.4f, 0.2f, 0.1f)));
 	list[i++] = new Sphere(Vec3(4.0f, 1.0f, 0.0f), 1.0f, new Metal(Vec3(0.7f, 0.6f, 0.5f), 0.0f));
 
-	return new HitableList(list, i);
+	return new BVHNode(list, i, time0, time1);
 }
 
 
@@ -97,15 +98,16 @@ int main()
 
 	Image image(IMAGE_WIDTH, IMAGE_HEIGHT);
 
-	Hitable* world = random_scene();
+	float time0 = 0.0f;
+	float time1 = 1.0f;
+
+	Hitable* world = random_scene(time0, time1);
 
 	Vec3 origin{ 13.0f, 2.0f, 3.0f };
 	Vec3 target{ 0.0f, 0.0f, 0.0f };
 	Vec3 up{ 0.0f, 1.0f, 0.0f };
 	float dist_to_focus = (origin - target).length();
 	float aperture = 0.1f;
-	float time0 = 0.0f;
-	float time1 = 1.0f;
 
 	Camera cam(
 		origin,

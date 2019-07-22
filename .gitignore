@@ -36,4 +36,7 @@
 *.db-wal
 *.idb
 *.tlog
-one_weekend/
+*.tss
+*.ipch
+*.iobj
+*.ipdb

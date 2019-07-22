@@ -16,6 +16,8 @@
     <ClInclude Include="metal.h" />
     <ClInclude Include="dielectric.h" />
     <ClInclude Include="moving_sphere.h" />
+    <ClInclude Include="aabb.h" />
+    <ClInclude Include="bvh.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="image.cpp" />
@@ -29,5 +31,7 @@
     <ClCompile Include="metal.cpp" />
     <ClCompile Include="dielectric.cpp" />
     <ClCompile Include="moving_sphere.cpp" />
+    <ClCompile Include="aabb.cpp" />
+    <ClCompile Include="bvh.cpp" />
   </ItemGroup>
 </Project>

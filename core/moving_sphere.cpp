@@ -2,6 +2,8 @@
 
 #include "moving_sphere.h"
 
+#include "aabb.h"
+
 
 Vec3 MovingSphere::center(float time) const
 {
@@ -39,4 +41,17 @@ bool MovingSphere::hit(const Ray& r, float t_min, float t_max, HitRecord& rec) c
 		}
 	}
 	return false;
+}
+
+
+bool MovingSphere::bounding_box(float t0, float t1, AABB& box) const
+{
+	const Vec3 vec_rad{ m_radius, m_radius, m_radius };
+
+	AABB box0 = AABB(center(t0) - vec_rad, center(t0) + vec_rad);
+	AABB box1 = AABB(center(t1) - vec_rad, center(t1) + vec_rad);
+
+	box = surrounding_box(box0, box1);
+
+	return true;
 }
