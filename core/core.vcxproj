@@ -120,18 +120,17 @@
     <ClInclude Include="aabb.h" />
     <ClInclude Include="bvh.h" />
     <ClInclude Include="camera.h" />
-    <ClInclude Include="dielectric.h" />
     <ClInclude Include="hitable.h" />
     <ClInclude Include="hitable_list.h" />
     <ClInclude Include="image.h" />
-    <ClInclude Include="lambertian.h" />
     <ClInclude Include="material.h" />
-    <ClInclude Include="metal.h" />
     <ClInclude Include="moving_sphere.h" />
+    <ClInclude Include="noise.h" />
     <ClInclude Include="rng.h" />
     <ClInclude Include="ray.h" />
     <ClInclude Include="sphere.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="texture.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="vec3.h" />
   </ItemGroup>
@@ -139,18 +138,18 @@
     <ClCompile Include="aabb.cpp" />
     <ClCompile Include="bvh.cpp" />
     <ClCompile Include="camera.cpp" />
-    <ClCompile Include="dielectric.cpp" />
     <ClCompile Include="hitable_list.cpp" />
     <ClCompile Include="image.cpp" />
-    <ClCompile Include="lambertian.cpp" />
-    <ClCompile Include="metal.cpp" />
+    <ClCompile Include="material.cpp" />
     <ClCompile Include="moving_sphere.cpp" />
+    <ClCompile Include="noise.cpp" />
     <ClCompile Include="rng.cpp" />
     <ClCompile Include="sphere.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="texture.cpp" />
     <ClCompile Include="timer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

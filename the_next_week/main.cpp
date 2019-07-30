@@ -2,15 +2,14 @@
 
 #include "bvh.h"
 #include "camera.h"
-#include "dielectric.h"
 #include "hitable_list.h"
 #include "image.h"
-#include "lambertian.h"
-#include "metal.h"
+#include "material.h"
 #include "moving_sphere.h"
 #include "ray.h"
 #include "rng.h"
 #include "sphere.h"
+#include "texture.h"
 
 
 using namespace std;
@@ -57,7 +56,8 @@ Hitable* random_scene(float time0, float time1)
 {
 	int n = 500;
 	Hitable** list = new Hitable*[n + 1];
-	list[0] = new Sphere(Vec3(0.0f, -1000.0f, 0.0f), 1000.0f, new Lambertian(Vec3(0.5f, 0.5f, 0.5f)));
+	Texture * checker = new CheckerTexture(new ConstantTexture(Vec3(0.2f, 0.3f, 0.1f)), new ConstantTexture(Vec3(0.9f, 0.9f, 0.9f)));
+	list[0] = new Sphere(Vec3(0.0f, -1000.0f, 0.0f), 1000.0f, new Lambertian(checker));
 	int i = 1;
 	for (int a = -11; a < 11; ++a)
 	{
@@ -69,7 +69,7 @@ Hitable* random_scene(float time0, float time1)
 			{
 				if (choose_mat < 0.8f)
 				{
-					list[i++] = new MovingSphere(center, center + Vec3(0.0f, 0.5f * g_RNG.NextFloat(), 0.0f), time0, time1, 0.2f, new Lambertian(Vec3(g_RNG.NextFloat() * g_RNG.NextFloat(), g_RNG.NextFloat() * g_RNG.NextFloat(), g_RNG.NextFloat() * g_RNG.NextFloat())));
+					list[i++] = new MovingSphere(center, center + Vec3(0.0f, 0.5f * g_RNG.NextFloat(), 0.0f), time0, time1, 0.2f, new Lambertian(new ConstantTexture(Vec3(g_RNG.NextFloat() * g_RNG.NextFloat(), g_RNG.NextFloat() * g_RNG.NextFloat(), g_RNG.NextFloat() * g_RNG.NextFloat()))));
 				}
 				else if (choose_mat < 0.95f)
 				{
@@ -84,10 +84,32 @@ Hitable* random_scene(float time0, float time1)
 	}
 
 	list[i++] = new Sphere(Vec3(0.0f, 1.0f, 0.0f), 1.0f, new Dielectric(1.5f));
-	list[i++] = new Sphere(Vec3(-4.0f, 1.0f, 0.0f), 1.0f, new Lambertian(Vec3(0.4f, 0.2f, 0.1f)));
+	list[i++] = new Sphere(Vec3(-4.0f, 1.0f, 0.0f), 1.0f, new Lambertian(new ConstantTexture(Vec3(0.4f, 0.2f, 0.1f))));
 	list[i++] = new Sphere(Vec3(4.0f, 1.0f, 0.0f), 1.0f, new Metal(Vec3(0.7f, 0.6f, 0.5f), 0.0f));
 
 	return new BVHNode(list, i, time0, time1);
+}
+
+
+Hitable* two_spheres()
+{
+	Texture * checker = new CheckerTexture(new ConstantTexture(Vec3(0.2f, 0.3f, 0.1f)), new ConstantTexture(Vec3(0.9f, 0.9f, 0.9f)));
+	int n = 50;
+	Hitable** list = new Hitable*[n + 1];
+	list[0] = new Sphere(Vec3(0.0f, -10.0f, 0.0f), 10.0f, new Lambertian(checker));
+	list[1] = new Sphere(Vec3(0.0f, 10.0f, 0.0f), 10.0f, new Lambertian(checker));
+	return new HitableList(list, 2);
+}
+
+
+Hitable* two_perlin_spheres()
+{
+	Texture* pertext = new NoiseTexture();
+	int n = 50;
+	Hitable** list = new Hitable*[n + 1];
+	list[0] = new Sphere(Vec3(0.0f, -1000.0f, 0.0f), 1000.0f, new Lambertian(pertext));
+	list[1] = new Sphere(Vec3(0.0f, 2.0f, 0.0f), 2.0f, new Lambertian(pertext));
+	return new HitableList(list, 2);
 }
 
 
@@ -101,13 +123,16 @@ int main()
 	float time0 = 0.0f;
 	float time1 = 1.0f;
 
-	Hitable* world = random_scene(time0, time1);
+	//Hitable* world = random_scene(time0, time1);
+	Hitable* world = two_perlin_spheres();
 
 	Vec3 origin{ 13.0f, 2.0f, 3.0f };
 	Vec3 target{ 0.0f, 0.0f, 0.0f };
 	Vec3 up{ 0.0f, 1.0f, 0.0f };
-	float dist_to_focus = (origin - target).length();
-	float aperture = 0.1f;
+	//float dist_to_focus = (origin - target).length();
+	//float aperture = 0.1f;
+	float dist_to_focus = 10.0f;
+	float aperture = 0.0f;
 
 	Camera cam(
 		origin,

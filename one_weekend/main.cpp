@@ -1,14 +1,13 @@
 #include "stdafx.h"
 
 #include "camera.h"
-#include "dielectric.h"
 #include "hitable_list.h"
 #include "image.h"
-#include "lambertian.h"
-#include "metal.h"
+#include "material.h"
 #include "ray.h"
 #include "rng.h"
 #include "sphere.h"
+#include "texture.h"
 
 
 using namespace std;
@@ -55,7 +54,7 @@ Hitable* random_scene()
 {
 	int n = 500;
 	Hitable** list = new Hitable*[n + 1];
-	list[0] = new Sphere(Vec3(0.0f, -1000.0f, 0.0f), 1000.0f, new Lambertian(Vec3(0.5f, 0.5f, 0.5f)));
+	list[0] = new Sphere(Vec3(0.0f, -1000.0f, 0.0f), 1000.0f, new Lambertian(new ConstantTexture(Vec3(0.5f, 0.5f, 0.5f))));
 	int i = 1;
 	for (int a = -11; a < 11; ++a)
 	{
@@ -67,7 +66,7 @@ Hitable* random_scene()
 			{
 				if (choose_mat < 0.8f)
 				{
-					list[i++] = new Sphere(center, 0.2f, new Lambertian(Vec3(g_RNG.NextFloat() * g_RNG.NextFloat(), g_RNG.NextFloat() * g_RNG.NextFloat(), g_RNG.NextFloat() * g_RNG.NextFloat())));
+					list[i++] = new Sphere(center, 0.2f, new Lambertian(new ConstantTexture(Vec3(g_RNG.NextFloat() * g_RNG.NextFloat(), g_RNG.NextFloat() * g_RNG.NextFloat(), g_RNG.NextFloat() * g_RNG.NextFloat()))));
 				}
 				else if (choose_mat < 0.95f)
 				{
@@ -82,7 +81,7 @@ Hitable* random_scene()
 	}
 
 	list[i++] = new Sphere(Vec3(0.0f, 1.0f, 0.0f), 1.0f, new Dielectric(1.5f));
-	list[i++] = new Sphere(Vec3(-4.0f, 1.0f, 0.0f), 1.0f, new Lambertian(Vec3(0.4f, 0.2f, 0.1f)));
+	list[i++] = new Sphere(Vec3(-4.0f, 1.0f, 0.0f), 1.0f, new Lambertian(new ConstantTexture(Vec3(0.4f, 0.2f, 0.1f))));
 	list[i++] = new Sphere(Vec3(4.0f, 1.0f, 0.0f), 1.0f, new Metal(Vec3(0.7f, 0.6f, 0.5f), 0.0f));
 
 	return new HitableList(list, i);

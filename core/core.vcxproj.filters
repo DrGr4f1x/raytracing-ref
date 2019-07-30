@@ -12,12 +12,11 @@
     <ClInclude Include="camera.h" />
     <ClInclude Include="rng.h" />
     <ClInclude Include="material.h" />
-    <ClInclude Include="lambertian.h" />
-    <ClInclude Include="metal.h" />
-    <ClInclude Include="dielectric.h" />
     <ClInclude Include="moving_sphere.h" />
     <ClInclude Include="aabb.h" />
     <ClInclude Include="bvh.h" />
+    <ClInclude Include="texture.h" />
+    <ClInclude Include="noise.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="image.cpp" />
@@ -27,11 +26,11 @@
     <ClCompile Include="hitable_list.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="rng.cpp" />
-    <ClCompile Include="lambertian.cpp" />
-    <ClCompile Include="metal.cpp" />
-    <ClCompile Include="dielectric.cpp" />
     <ClCompile Include="moving_sphere.cpp" />
     <ClCompile Include="aabb.cpp" />
     <ClCompile Include="bvh.cpp" />
+    <ClCompile Include="material.cpp" />
+    <ClCompile Include="texture.cpp" />
+    <ClCompile Include="noise.cpp" />
   </ItemGroup>
 </Project>
