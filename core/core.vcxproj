@@ -118,14 +118,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="aabb.h" />
+    <ClInclude Include="box.h" />
     <ClInclude Include="bvh.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="hitable.h" />
     <ClInclude Include="hitable_list.h" />
     <ClInclude Include="image.h" />
+    <ClInclude Include="instance.h" />
     <ClInclude Include="material.h" />
+    <ClInclude Include="medium.h" />
     <ClInclude Include="moving_sphere.h" />
     <ClInclude Include="noise.h" />
+    <ClInclude Include="rectangle.h" />
     <ClInclude Include="rng.h" />
     <ClInclude Include="ray.h" />
     <ClInclude Include="sphere.h" />
@@ -136,13 +140,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="aabb.cpp" />
+    <ClCompile Include="box.cpp" />
     <ClCompile Include="bvh.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="hitable_list.cpp" />
     <ClCompile Include="image.cpp" />
+    <ClCompile Include="instance.cpp" />
     <ClCompile Include="material.cpp" />
+    <ClCompile Include="medium.cpp" />
     <ClCompile Include="moving_sphere.cpp" />
     <ClCompile Include="noise.cpp" />
+    <ClCompile Include="rectangle.cpp" />
     <ClCompile Include="rng.cpp" />
     <ClCompile Include="sphere.cpp" />
     <ClCompile Include="stdafx.cpp">

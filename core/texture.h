@@ -47,9 +47,32 @@ class NoiseTexture : public Texture
 {
 public:
 	NoiseTexture() = default;
+	NoiseTexture(float s)
+		: m_scale(s)
+	{}
 
 	Vec3 value(float u, float v, const Vec3& p) const override;
 
 private:
 	Perlin m_noise;
+	float m_scale{ 1.0f };
+};
+
+
+class ImageTexture : public Texture
+{
+public:
+	ImageTexture() = default;
+	ImageTexture(unsigned char* pixels, int A, int B)
+		: m_data(pixels)
+		, m_nx(A)
+		, m_ny(B)
+	{}
+
+	Vec3 value(float u, float v, const Vec3& p) const override;
+
+private:
+	unsigned char* m_data{ nullptr };
+	int m_nx{ 0 };
+	int m_ny{ 0 };
 };

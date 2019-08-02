@@ -17,6 +17,10 @@
     <ClInclude Include="bvh.h" />
     <ClInclude Include="texture.h" />
     <ClInclude Include="noise.h" />
+    <ClInclude Include="rectangle.h" />
+    <ClInclude Include="box.h" />
+    <ClInclude Include="instance.h" />
+    <ClInclude Include="medium.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="image.cpp" />
@@ -32,5 +36,9 @@
     <ClCompile Include="material.cpp" />
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="noise.cpp" />
+    <ClCompile Include="rectangle.cpp" />
+    <ClCompile Include="box.cpp" />
+    <ClCompile Include="instance.cpp" />
+    <ClCompile Include="medium.cpp" />
   </ItemGroup>
 </Project>

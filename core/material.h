@@ -11,6 +11,7 @@ class Material
 {
 public:
 	virtual bool scatter(const Ray& r_in, const HitRecord& rec, Vec3& attenuation, Ray& scattered) const = 0;
+	virtual Vec3 emitted(float u, float v, const Vec3& p) const { return Vec3(0.0f, 0.0f, 0.0f); }
 };
 
 
@@ -54,4 +55,36 @@ public:
 
 private:
 	float m_refractionIndex;
+};
+
+
+class DiffuseLight : public Material
+{
+public:
+	DiffuseLight(const Texture* tex)
+		: m_emitter(tex)
+	{}
+
+	bool scatter(const Ray& r_in, const HitRecord& rec, Vec3& attenuation, Ray& scattered) const override
+	{
+		return false;
+	}
+	Vec3 emitted(float u, float v, const Vec3& p) const override;
+
+private:
+	const Texture* m_emitter{ nullptr };
+};
+
+
+class Isotropic : public Material
+{
+public:
+	Isotropic(const Texture* tex)
+		: m_albedo(tex)
+	{}
+
+	bool scatter(const Ray& r_in, const HitRecord& rec, Vec3& attenuation, Ray& scattered) const override;
+
+private:
+	const Texture* m_albedo{ nullptr };
 };

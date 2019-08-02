@@ -11,7 +11,7 @@ bool Lambertian::scatter(const Ray& r_in, const HitRecord& rec, Vec3& attenuatio
 {
 	Vec3 target = rec.p + rec.normal + random_in_unit_sphere();
 	scattered = Ray(rec.p, target - rec.p, r_in.time());
-	attenuation = m_albedo->value(0.0f, 0.0f, rec.p);
+	attenuation = m_albedo->value(rec.u, rec.v, rec.p);
 
 	return true;
 }
@@ -75,5 +75,19 @@ bool Dielectric::scatter(const Ray& r_in, const HitRecord& rec, Vec3& attenuatio
 		scattered = Ray(rec.p, refracted, r_in.time());
 	}
 
+	return true;
+}
+
+
+Vec3 DiffuseLight::emitted(float u, float v, const Vec3& p) const
+{
+	return m_emitter->value(u, v, p);
+}
+
+
+bool Isotropic::scatter(const Ray& r_in, const HitRecord& rec, Vec3& attenuation, Ray& scattered) const
+{
+	scattered = Ray(rec.p, random_in_unit_sphere());
+	attenuation = m_albedo->value(rec.u, rec.v, rec.p);
 	return true;
 }
